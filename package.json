@@ -1,8 +1,8 @@
 {
-  "name": "todo",
+  "name": "todo-list",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://SPoluliakh.github.io/todo/",
+  "homepage": "https://SPoluliakh.github.io/todo-list/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -48,12 +48,12 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SPoluliakh/todo.git"
+    "url": "git+https://github.com/SPoluliakh/todo-list.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SPoluliakh/todo/issues"
+    "url": "https://github.com/SPoluliakh/todo-list/issues"
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.26"
