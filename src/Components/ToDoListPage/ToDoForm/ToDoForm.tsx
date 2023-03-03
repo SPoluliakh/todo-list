@@ -1,21 +1,12 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import * as SC from './ToDoForm.styled';
 
 interface IProps {
   error: string;
-  title: string;
-  description: string;
-  handleInputChange: (evt: ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (evt: FormEvent<HTMLFormElement>) => void;
 }
 
-export const ToDoForm = ({
-  error,
-  title,
-  description,
-  handleInputChange,
-  handleSubmit,
-}: IProps) => {
+export const ToDoForm = ({ error, handleSubmit }: IProps) => {
   return (
     <SC.Form onSubmit={handleSubmit}>
       <SC.Wrap>
@@ -26,17 +17,15 @@ export const ToDoForm = ({
             type="text"
             placeholder="Enter title"
             name="title"
-            value={title}
-            onChange={handleInputChange}
             style={{
               border:
-                error && title.trim() === ''
+                error === 'Field title is empty'
                   ? '1px solid red'
                   : '1px solid black',
             }}
           />
 
-          {error && title.trim() === '' && (
+          {error === 'Field title is empty' && (
             <SC.ErrorText> This field is empty </SC.ErrorText>
           )}
         </SC.InnerWrap>
@@ -47,17 +36,15 @@ export const ToDoForm = ({
             type="text"
             placeholder="Enter description"
             name="description"
-            value={description}
-            onChange={handleInputChange}
             style={{
               border:
-                error && description.trim() === ''
+                error === 'Field description is empty'
                   ? '1px solid red'
                   : '1px solid black',
             }}
           />
 
-          {error && description.trim() === '' && (
+          {error === 'Field description is empty' && (
             <SC.ErrorText> This field is empty </SC.ErrorText>
           )}
         </SC.InnerWrap>

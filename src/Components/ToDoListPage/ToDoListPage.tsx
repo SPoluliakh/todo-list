@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import { ToDoForm } from './ToDoForm/ToDoForm';
 import { ToDoList } from './ToDoList/ToDoList';
 import { ELocalStorage } from '../../Helpers/enums/ls.enum';
@@ -6,9 +6,12 @@ import { myStorage } from '../../Helpers/functions/myStorage';
 import { ItoDo } from '../../Helpers/interfaces/toDo.interface';
 import { useToggle } from '../../Helpers/huks/useToggle';
 
+interface FormElements extends HTMLFormControlsCollection {
+  title: HTMLInputElement;
+  description: HTMLInputElement;
+}
+
 export const ToDoListPage = () => {
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [list, setList] = useState<ItoDo[] | []>([]);
 
@@ -33,42 +36,35 @@ export const ToDoListPage = () => {
     handleToggle();
   };
 
-  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.currentTarget;
-    name === 'title' ? setTitle(value) : setDescription(value);
-  };
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (title.trim() === '' || description.trim() === '') {
-      setError('This field is empty');
+
+    const elements = evt.currentTarget.elements as FormElements;
+    const { title, description } = elements;
+
+    if (title.value.trim() === '') {
+      setError('Field title is empty');
       return;
     }
 
-    const isInLocalStorage: boolean = myStorage(title, description);
+    if (description.value.trim() === '') {
+      setError('Field description is empty');
+      return;
+    }
+
+    const isInLocalStorage: boolean = myStorage(title.value, description.value);
     if (isInLocalStorage) {
-      handleResetForm();
+      evt.currentTarget.reset();
+      setError('');
       handleToggle();
       return;
     }
     return;
   };
 
-  const handleResetForm = () => {
-    setTitle('');
-    setDescription('');
-    setError('');
-  };
-
   return (
     <>
-      <ToDoForm
-        error={error}
-        title={title}
-        description={description}
-        handleInputChange={handleInputChange}
-        handleSubmit={handleSubmit}
-      />
+      <ToDoForm error={error} handleSubmit={handleSubmit} />
       <ToDoList list={list} handleToggleStatus={handleToggleStatus} />
     </>
   );
