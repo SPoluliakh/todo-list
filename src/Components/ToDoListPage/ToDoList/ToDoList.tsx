@@ -33,6 +33,6 @@ export const ToDoList = memo(
     );
   },
   (prevProps, nextProps) => {
-    return prevProps.list === nextProps.list;
+    return prevProps.handleToggleStatus === nextProps.handleToggleStatus;
   }
 );

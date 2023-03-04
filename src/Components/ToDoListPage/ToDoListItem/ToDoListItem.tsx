@@ -5,15 +5,15 @@ import { useToggle } from '../../../Helpers/huks/useToggle';
 import * as SC from './ToDoListItem.styled';
 
 interface IProps {
-  item: ItoDo | [];
+  item: ItoDo;
   handleToggleStatus: (id: number) => void;
-  key: number;
 }
 
 export const ToDoListItem = ({ item, handleToggleStatus }: IProps) => {
-  const { id, title, description, status } = item as ItoDo;
+  const { id, title, description, status } = item;
 
   const { isToggle, handleToggle } = useToggle();
+  console.log(id);
 
   return (
     <>

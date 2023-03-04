@@ -1,4 +1,4 @@
-import { FormEvent, useState, useEffect } from 'react';
+import { FormEvent, useState, useEffect, useCallback } from 'react';
 import { ToDoForm } from './ToDoForm/ToDoForm';
 import { ToDoList } from './ToDoList/ToDoList';
 import { ELocalStorage } from '../../Helpers/enums/ls.enum';
@@ -25,16 +25,19 @@ export const ToDoListPage = () => {
     setList(myList);
   }, [isToggle]);
 
-  const handleToggleStatus = (id: number) => {
-    const newList = list.map(toDo => {
-      if (toDo.id !== id) return toDo;
+  const handleToggleStatus = useCallback(
+    (id: number) => {
+      const newList = list.map(toDo => {
+        if (toDo.id !== id) return toDo;
 
-      return { ...toDo, status: !toDo.status };
-    });
+        return { ...toDo, status: !toDo.status };
+      });
 
-    localStorage.setItem(ELocalStorage.toDoList, JSON.stringify(newList));
-    handleToggle();
-  };
+      localStorage.setItem(ELocalStorage.toDoList, JSON.stringify(newList));
+      handleToggle();
+    },
+    [list, handleToggle]
+  );
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
